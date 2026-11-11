@@ -20,9 +20,16 @@ if not SECRET_KEY:
         "DJANGO_SECRET_KEY is missing. Add it to your .env file."
     )
 
-DEBUG = True
+DEBUG = os.getenv("DEBUG", "False").strip().lower() == "true"
 
-ALLOWED_HOSTS = []
+# Render provides RENDER_EXTERNAL_HOSTNAME automatically for web services.
+_render_hostname = os.getenv("RENDER_EXTERNAL_HOSTNAME", "").strip()
+ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
+if _render_hostname:
+    ALLOWED_HOSTS.append(_render_hostname)
+
+CSRF_TRUSTED_ORIGINS = [f"https://{_render_hostname}"] if _render_hostname else []
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
 
 # Application definition
@@ -38,6 +45,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -103,13 +111,22 @@ USE_TZ = True
 
 
 # Static files
-STATIC_URL = "static/"
+STATIC_URL = "/static/"
 
 STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
 
 STATIC_ROOT = BASE_DIR / "staticfiles"
+
+STORAGES = {
+    "default": {
+        "BACKEND": "django.core.files.storage.FileSystemStorage",
+    },
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+}
 
 
 # PayPal configuration
