@@ -1,0 +1,54 @@
+
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}AI Planner | AUVRION{% endblock %}
+{% block page_heading %}AI Planner{% endblock %}
+{% block page_subtitle %}Translate your goal into an actionable agent task plan{% endblock %}
+
+{% block content %}
+<section class="section planner-intro">
+    <div>
+        <span class="eyebrow">GROQ-POWERED ORCHESTRATION</span>
+        <h2>What do you want to accomplish?</h2>
+        <p>Describe the outcome. AUVRION will propose tasks and assign suitable specialists.</p>
+    </div>
+
+    <textarea id="goalInput" rows="4" maxlength="1000"
+        placeholder="Example: Analyze monthly sales data, create charts, and prepare an executive summary."></textarea>
+
+    <div class="planner-actions">
+        <span id="plannerMessage" class="form-message"></span>
+        <button id="generatePlanButton" class="primary-button">Generate plan ✧</button>
+    </div>
+</section>
+
+<section id="planSection" class="section hidden">
+    <div class="section-heading">
+        <div>
+            <h2>Proposed execution plan</h2>
+            <p id="planSummary">Review the suggested tasks before approval.</p>
+        </div>
+        <span class="status-pill queued">AWAITING APPROVAL</span>
+    </div>
+
+    <div id="planTasks" class="plan-list"></div>
+
+    <div class="plan-total">
+        <span>Estimated total</span>
+        <strong id="planTotal">$0.00</strong>
+    </div>
+
+    <div class="planner-actions">
+        <button id="rejectPlanButton" class="secondary-button">Discard plan</button>
+        <button id="approvePlanButton" class="primary-button">Approve plan</button>
+    </div>
+
+    <p id="approvalMessage" class="form-message"></p>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'js/grid.js' %}"></script>
+<script src="{% static 'js/planner.js' %}"></script>
+{% endblock %}

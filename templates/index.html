@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Dashboard | AUVRION{% endblock %}
+{% block page_heading %}Dashboard{% endblock %}
+{% block page_subtitle %}Overview of your AI agent economy and operations{% endblock %}
+{% block extra_head %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ag-grid-community@32.3.3/styles/ag-grid.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ag-grid-community@32.3.3/styles/ag-theme-quartz.css">
+{% endblock %}
+{% block content %}
+<section class="stats-grid">
+    <div class="stat-card"><span>TOTAL TASKS</span><strong id="totalTasks">0</strong></div>
+    <div class="stat-card"><span>RUNNING TASKS</span><strong id="runningTasks">0</strong></div>
+    <div class="stat-card"><span>COMPLETED TASKS</span><strong id="completedTasks">0</strong></div>
+    <div class="stat-card"><span>AVAILABLE AGENTS</span><strong id="totalAgents">0</strong></div>
+</section>
+<section class="section">
+    <div class="section-heading"><div><h2>Agent Workforce</h2><p>Your available AI specialists</p></div><a href="{% url 'agents' %}" class="text-link">View all agents →</a></div>
+    <div id="agentList" class="agent-grid"></div>
+</section>
+<section class="section">
+    <div class="section-heading"><div><h2>Quick Task Creation</h2><p>Create and assign a task manually</p></div><a href="{% url 'planner' %}" class="text-link">Open AI Planner →</a></div>
+    <form id="taskForm" class="task-form">
+        <div class="form-field task-title-field"><label for="taskTitle">TASK NAME</label><input id="taskTitle" maxlength="255" placeholder="Enter task name" required></div>
+        <div class="form-field"><label for="taskAgent">ASSIGN AGENT</label><select id="taskAgent"><option value="">Unassigned</option></select></div>
+        <div class="form-field"><label for="taskPriority">PRIORITY</label><select id="taskPriority"><option>Low</option><option selected>Medium</option><option>High</option></select></div>
+        <button class="primary-button" type="submit">+ Create Task</button>
+    </form>
+    <p id="formMessage" class="form-message"></p>
+</section>
+<section class="section">
+    <div class="section-heading"><div><h2>Recent Task Operations</h2><p>Monitor task status and execution progress</p></div><a href="{% url 'tasks' %}" class="text-link">View all tasks →</a></div>
+    <div class="grid-toolbar"><input type="search" id="quickSearch" placeholder="Search tasks..."><button id="refreshButton" class="secondary-button">↻ Refresh</button><span id="recordCount">0 records</span></div>
+    <div id="taskGrid" class="ag-theme-quartz-dark grid-box"></div>
+</section>
+{% endblock %}
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/ag-grid-community@32.3.3/dist/ag-grid-community.min.js"></script>
+<script src="{% static 'js/grid.js' %}"></script>
+<script src="{% static 'js/app.js' %}"></script>
+{% endblock %}

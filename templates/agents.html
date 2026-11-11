@@ -1,0 +1,35 @@
+
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Agent Marketplace | AUVRION{% endblock %}
+
+{% block page_heading %}Agent Marketplace{% endblock %}
+
+{% block page_subtitle %}
+Explore the specialist agents available in your workspace
+{% endblock %}
+
+{% block content %}
+<section class="section">
+    <div class="section-heading">
+        <div>
+            <h2>Available specialists</h2>
+            <p>Agent pricing is shown per assigned task.</p>
+        </div>
+
+        <button id="agentsRefresh" class="secondary-button">
+            ↻ Refresh
+        </button>
+    </div>
+
+    <div id="agentsPageList" class="agent-grid"></div>
+
+    <p id="agentsMessage" class="form-message"></p>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'js/grid.js' %}"></script>
+<script src="{% static 'js/agents.js' %}"></script>
+{% endblock %}

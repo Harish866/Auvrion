@@ -1,0 +1,42 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}AUVRION{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    {% block extra_head %}{% endblock %}
+</head>
+<body>
+<div class="app-layout">
+    <aside class="sidebar">
+        <a href="{% url 'dashboard' %}" class="brand">AUVRION<span>.</span></a>
+        <div class="sidebar-label">WORKSPACE</div>
+        <nav class="sidebar-nav">
+            <a href="{% url 'dashboard' %}" class="nav-item {% if active_page == 'dashboard' %}active{% endif %}">◈ <span>Dashboard</span></a>
+            <a href="{% url 'planner' %}" class="nav-item {% if active_page == 'planner' %}active{% endif %}">✧ <span>AI Planner</span></a>
+            <a href="{% url 'agents' %}" class="nav-item {% if active_page == 'agents' %}active{% endif %}">◎ <span>Agent Marketplace</span></a>
+            <a href="{% url 'tasks' %}" class="nav-item {% if active_page == 'tasks' %}active{% endif %}">▤ <span>Task Operations</span></a>
+            <div class="sidebar-label">FINANCE</div>
+            <a href="{% url 'payments' %}" class="nav-item {% if active_page == 'payments' %}active{% endif %}">◇ <span>Payments</span></a>
+            <div class="sidebar-label">PREFERENCES</div>
+            <a href="{% url 'settings' %}" class="nav-item {% if active_page == 'settings' %}active{% endif %}">⚙ <span>Settings</span></a>
+        </nav>
+        <div class="sidebar-footer">AI AGENT ECONOMY<br><span>POWERED BY AUVRION</span></div>
+    </aside>
+    <main class="main-content">
+        <header class="topbar">
+            <div>
+                <h1>{% block page_heading %}Dashboard{% endblock %}</h1>
+                <p>{% block page_subtitle %}AI agent orchestration platform{% endblock %}</p>
+            </div>
+            <div class="system-status"><span class="status-dot"></span>SYSTEM ONLINE</div>
+        </header>
+        {% block content %}{% endblock %}
+    </main>
+</div>
+<form id="csrf-form" hidden>{% csrf_token %}</form>
+{% block scripts %}{% endblock %}
+</body>
+</html>

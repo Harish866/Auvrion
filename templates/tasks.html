@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Task Operations | AUVRION{% endblock %}
+{% block page_heading %}Task Operations{% endblock %}
+{% block page_subtitle %}Execute paid agent plans against real datasets{% endblock %}
+{% block extra_head %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ag-grid-community@32.3.3/styles/ag-grid.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ag-grid-community@32.3.3/styles/ag-theme-quartz.css">
+{% endblock %}
+{% block content %}
+<section class="section execution-panel">
+  <div class="section-heading"><div><h2>Run an agent workflow</h2><p>Upload a CSV dataset for a plan that has completed PayPal payment.</p></div></div>
+  <form id="executionForm" class="execution-form">
+    <label class="form-field">Paid execution plan<select id="executionPlan" required><option value="">Loading paid plans…</option></select></label>
+    <label class="form-field">CSV dataset<input id="executionCsv" type="file" accept=".csv,text/csv" required></label>
+    <button id="executeButton" class="primary-button" type="submit">Run agents</button>
+  </form>
+  <p class="execution-hint">CSV limit: 5 MB, 10,000 rows and 40 columns. Only paid plans can execute.</p>
+  <p id="executionMessage" class="form-message" aria-live="polite"></p>
+</section>
+<section class="section"><div class="section-heading"><div><h2>Task register</h2><p>Agent task status and execution outputs.</p></div></div><div class="grid-toolbar"><input id="tasksSearch" type="search" placeholder="Search tasks..."><button id="tasksRefresh" class="secondary-button" type="button">↻ Refresh</button><span id="tasksCount">0 records</span></div><div id="tasksGrid" class="ag-theme-quartz-dark grid-box tall-grid"></div></section>
+<section class="section" id="executionResults" hidden>
+  <div class="section-heading"><div><h2>Execution results</h2><p id="resultFilename"></p></div><span id="resultStatus" class="status-pill completed"></span></div>
+  <div id="analysisSummary" class="execution-summary"></div>
+  <div id="chartResults" class="execution-charts"></div>
+  <h3>Executive report</h3><pre id="executionReport" class="execution-report"></pre>
+</section>
+{% endblock %}
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/ag-grid-community@32.3.3/dist/ag-grid-community.min.js"></script>
+<script src="{% static 'js/grid.js' %}"></script>
+<script src="{% static 'js/tasks.js' %}"></script>
+{% endblock %}

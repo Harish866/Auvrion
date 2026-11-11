@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+{% block title %}Settings | AUVRION{% endblock %}
+{% block page_heading %}Settings{% endblock %}
+{% block page_subtitle %}Application configuration and environment status{% endblock %}
+{% block content %}
+<section class="section"><h2>Workspace configuration</h2><div class="settings-list"><div><strong>Application</strong><span>AUVRION</span></div><div><strong>Database</strong><span>SQLite</span></div><div><strong>AI provider</strong><span>Groq API — configured through server environment</span></div><div><strong>Task interface</strong><span>AG Grid Community</span></div><div><strong>Payment provider</strong><span>PayPal Sandbox — pending integration</span></div></div><p class="muted-note">Secrets are intentionally not displayed in the browser.</p></section>
+{% endblock %}

@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Payments | AUVRION{% endblock %}
+{% block page_heading %}Payments{% endblock %}
+{% block page_subtitle %}Sandbox checkout, payment performance and transaction history{% endblock %}
+
+{% block content %}
+<section class="section payment-panel">
+    <span class="eyebrow">PAYPAL SANDBOX CHECKOUT</span>
+    <h2>Complete your plan payment</h2>
+    <p>Review your approved AI execution plan before continuing to PayPal. Sandbox payments do not move real money.</p>
+    <div id="paymentNotice" class="notice-panel">
+        <strong id="paymentNoticeTitle">Awaiting payment details</strong>
+        <span id="paymentNoticeText">Approve a plan in AI Planner to begin checkout.</span>
+    </div>
+    <div class="plan-total">
+        <span>Approved plan total</span>
+        <strong id="paymentAmount">$0.00</strong>
+    </div>
+    <div class="planner-actions">
+        <button id="payWithPaypalButton" class="primary-button" disabled>Continue with PayPal</button>
+    </div>
+    <p id="paymentMessage" class="form-message"></p>
+</section>
+
+<section class="section">
+    <div class="section-heading">
+        <div><h2>Payment overview</h2><p>Figures are calculated from saved execution plans and payment records.</p></div>
+        <button id="refreshPaymentsButton" class="secondary-button" type="button">Refresh</button>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin:18px 0;">
+        <article class="stat-card"><span class="eyebrow">TOTAL REVENUE</span><strong id="totalRevenue">$0.00</strong><small>Successfully captured payments</small></article>
+        <article class="stat-card"><span class="eyebrow">COMPLETED</span><strong id="completedCount">0</strong><small>Verified transactions</small></article>
+        <article class="stat-card"><span class="eyebrow">PENDING</span><strong id="pendingCount">0</strong><small>Awaiting payment completion</small></article>
+        <article class="stat-card"><span class="eyebrow">FAILED</span><strong id="failedCount">0</strong><small>Unsuccessful transactions</small></article>
+    </div>
+</section>
+
+<section class="section">
+    <div class="section-heading">
+        <div><h2>Transaction history</h2><p>All execution plans are listed, including plans without a PayPal order.</p></div>
+        <span id="transactionCount" class="muted-note">0 records</span>
+    </div>
+    <div id="paymentsGrid" class="ag-theme-quartz" style="width:100%;height:390px;"></div>
+    <p id="paymentsLoadMessage" class="form-message"></p>
+</section>
+
+<section class="section">
+    <div class="section-heading"><div><h2>Payment process</h2><p>Every completed transaction is verified by the AUVRION backend.</p></div></div>
+    <div class="notice-panel"><strong>How checkout works</strong><span>1. AUVRION creates a PayPal order. 2. You approve it in PayPal Sandbox. 3. AUVRION captures and verifies the payment. 4. The plan is marked paid only after verification.</span></div>
+</section>
+
+<div id="paypalReturnData" data-order-id="{{ paypal_return_order_id|default:''|escape }}" data-cancelled="{% if paypal_cancelled %}true{% else %}false{% endif %}" hidden></div>
+{% endblock %}
+
+{% block scripts %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ag-grid-community@32.3.3/styles/ag-grid.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ag-grid-community@32.3.3/styles/ag-theme-quartz.css">
+<script src="https://cdn.jsdelivr.net/npm/ag-grid-community@32.3.3/dist/ag-grid-community.min.js"></script>
+<script src="{% static 'js/grid.js' %}"></script>
+<script src="{% static 'js/payments.js' %}"></script>
+{% endblock %}
